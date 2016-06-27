@@ -6,4 +6,12 @@ config = configparser.ConfigParser()
 config.read('blogs.ini')
 for blog in config.sections():
     d = feedparser.parse(blog)
-    print(config.get(blog, 'name') + ': ' + d.entries[0].published)
+    print(d.feed.title)
+    try:
+        try:
+            date = d.feed.published
+        except:
+            date = d.entries[0].updated
+    except:
+        date = d.entires[0].published
+    print(config.get(blog, 'name') + ': ' + date)
